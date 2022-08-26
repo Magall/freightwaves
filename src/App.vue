@@ -1,5 +1,5 @@
 <script setup  lang="ts">
-import { computed, ref, Ref, watch } from "vue";
+import { computed, ref, Ref } from "vue";
 import Table from "./components/Table.vue";
 import useNormalizeString from "./composables/useNormalizeString";
 import { iUser } from "./interfaces";
@@ -17,7 +17,6 @@ const searchString: Ref<string> = ref("");
 const userToUpdate: Ref<iUser> = ref(USER_EMPTY);
 let isModalOpen: Ref<boolean> = ref(false);
 let error = fetchError;
-
 let usersCache: any = {};
 const storage = window.sessionStorage;
 let cacheJson = storage.getItem('localUsersUpdates');
@@ -36,14 +35,6 @@ const mergedUsersFromCache = computed(() => {
 const researchedData = computed(() => {
   return mergedUsersFromCache.value.filter(searchLogic)
 })
-
-watch(searchString, (newSearchString) => {
-  if (!newSearchString) {
-    const { data: refetchUsers, error: refetchError } = useFetchHelper(`${BASE_API_URL}/users`)
-    data = refetchUsers;
-    error = refetchError;
-  }
-});
 
 function searchLogic(user: iUser): iUser | undefined {
   const nomalizedSearchString = useNormalizeString(searchString.value);
@@ -135,7 +126,6 @@ function saveUpdatedInfo() {
     padding: 10px;
     background: white;
     border-radius: 8px;
-    /* margin-bottom: 24px; */
     border: 1px solid #777;
     font-weight: 500;
     font-size: 16px;

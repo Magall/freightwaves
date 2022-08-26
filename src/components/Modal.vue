@@ -17,7 +17,6 @@ defineProps({ title: String })
                     <slot name="modalBody" />
                 </div>
                 <div id="modal-footer">
-
                     <slot name="modalFooter" />
                 </div>
             </div>

@@ -15,7 +15,7 @@ For editing the row I decided to create a Modal. In order to reuse it, it is an 
 Whenever the button save is trigered the new content is updated on the data array, the change is stored on the usersCache Map. If there is already a change on that position the cache will be updated, otherwise  will be create a new entry. I used a map here to be more eficient while tracking changes. In every cacheMap change it's updated on session strorage. When the page is loaded or reloaded the Session Storage content is read and merged with the data received from the api. This is performed by the computed (mergedUsersFromCache).
 
 ### Reach API and load
-Here I used fetch API and encapsulated it on a composable (useFetch). In order to refetch when there is no searchString typed there is a watcher to trigger the request again.
+Here I used fetch API and encapsulated it on a composable (useFetch).
 
 ## Decisions
 I tried to type functions and variables the most possible, expect for few ocasions where strictly type it was not a smart move. Also tried to eliminate the most 'magic names and strings', by creation of enums and constants.
