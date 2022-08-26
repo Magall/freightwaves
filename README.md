@@ -2,20 +2,20 @@
 
 ## Solutions
 
-### Table without <table></table>
-As listed on the requirements, should be used flexbox for create a table, so I created a div as container (table) and many others as rows(trs). Then relyed on flexbox to make 1 row on top of another and defined a width in % for the cells (tds), since the requirement was showing only three props. I decided to extract the Table to a component, for better readability and reuse.
+### Table without table tag
+As listed on the requirements, should be used flexbox for create a table, so there is a div as container (table) and many others as rows(trs). Then relyed on flexbox to make 1 row on top of another and defined a width in % for the cells (tds), since the requirement was showing only three props. I decided to extract the Table to a component, for better readability and reuse.
 
 ### Make table searchable
-To make it searchable I just used the Array.filter method and returned as a computed (researchedData). Since the search function would get large I decided to declare an helper for better readabillity. I normalized the strings with a composable (useNormalizeString) this makes the search case insensitive and trim it.
+To make it searchable I just used the Array.filter method and returned as a computed (researchedData). Since the search function would get large I decided to declare an helper for better readabillity. I normalized the strings with a composable (useNormalizeString), this makes the search case insensitive and trim it.
 
 ### Edit row on click
 For editing the row I decided to create a Modal. In order to reuse it, it is an external component that accepts slots on the body and footer. The Modal component itself provides mostly the styling and placement. letting the responsability of passing the content by slots to whoever use it.
 
 ### Edit persist on reload.
-Whenever the button save is trigered the new content is updated on the data array, the change is stored on the usersCache Map. If there is already a change on that position the cache will be updated, otherwise  will be create a new entry. I used a map here to be more eficient while tracking changes. In every cacheMap change it's updated on session strorage. When the page is loaded or reloaded the Session Storage content is read and merged with the data received from the api. This is performed by the computed (mergedUsersFromCache).
+Whenever the button save is trigered the new content is updated on the user array, the new user arrray is persisted on session storage. When the page is loaded I check if there is a cache on session storage if not the api request is fired.
 
 ### Reach API and load
-Here I used fetch API and encapsulated it on a composable (useFetch).
+Just used the fetch API
 
 ## Decisions
 I tried to type functions and variables the most possible, expect for few ocasions where strictly type it was not a smart move. Also tried to eliminate the most 'magic names and strings', by creation of enums and constants.
@@ -24,16 +24,12 @@ About the components the objective was similar to the functions, small, good nam
 
 ## File Structure
 For file naming, every vue instance starts with capital letter, every composing with 'use'.
-Enums names are uppercase and it's properties capital letter, constant names uppercase and if they are complex types the child props are all lower case.
+Enums names are uppercase and it's properties capital letter, constant names uppercased and if they are complex types the child props are all lower case.
 
 ### composables
 helper functions to reuse in the future 
-###### useFetch
-Just encapsulate and return the result or error of a request, based on the url parameter. Possible evolution would be use the vue-query lib to handle api calls.
 ###### useNormalizeString
 Returns the received string  trimed and uppercase, it's usefull while comparing strings.
-###### useUpdateArrayByHash
-Here it's the one who merges a Map and an array based on an id property. Honestly it's the less probable to reuse on the fututre, due the especifc use case but I decided to move here specially for better readabillity of the function that calls it, it's much better have a function call with a meaninfull name than a complicated logic. Keeping functions simple =).
 
 ### components
 ###### Modal
