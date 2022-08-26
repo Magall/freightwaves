@@ -40,14 +40,14 @@ As the modal holds no logic on it. Just emits an event to the parent know which 
 ###### Spinner
 this is the one responsible for the loading, very reusable. If this system grows to many screens and requests a possible evolution would be having one instance off it as a singleton on the app file and call id by a pinia "mutation" which would hold the isLoading boolean or an emiter.
 
-### Dependencies
+## Dependencies
 There are just a few dependencies on the app. It's asmall app and I tried to do as many thing as could with my own hands.
 - Loadsh 
 Used to deep clone complexes types. As JS pass complex types arguments by ref I try to avoid the most of passing references of complex types, since it can led to hard to find bugs.
 - Sass
 Just used for hierachy selectors. A possible evolution for the app would be declare style constants for spacing, fonts, colors etc.. for style that would be reused in other parts I just used the #app selector and removed the scoped.
 
-### How to Run?
+## How to Run?
 
 - clone it.
 - yarn
