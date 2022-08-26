@@ -26,25 +26,6 @@ About the components the objective was similar to the functions, small, good nam
 For file naming, every vue instance starts with capital letter, every composing with 'use'.
 Enums names are uppercase and it's properties capital letter, constant names uppercase and if they are complex types the child props are all lower case.
 
-src
- ┣ assets
- ┃ ┗ logo.png
- ┣ components
- ┃ ┣ Modal.vue
- ┃ ┣ Spinner.vue
- ┃ ┗ Table.vue
- ┣ composables
- ┃ ┣ useFetch.ts
- ┃ ┣ useNormalizeString.ts
- ┃ ┗ useUpdateArrayByHash.ts
- ┣ App.vue
- ┣ constants.ts
- ┣ enums.ts
- ┣ env.d.ts
- ┣ interfaces.ts
- ┗ main.ts
-
-
 ### composables
 helper functions to reuse in the future 
 ###### useFetch
@@ -69,6 +50,12 @@ There are just a few dependencies on the app. It's asmall app and I tried to do 
 Used to deep clone complexes types. As JS pass complex types arguments by ref I try to avoid the most of passing references of complex types, since it can led to hard to find bugs.
 - Sass
 Just used for hierachy selectors. A possible evolution for the app would be declare style constants for spacing, fonts, colors etc.. for style that would be reused in other parts I just used the #app selector and removed the scoped.
+
+### How to Run?
+
+clone it.
+yarn
+yarn dev
 
 ### Do you have any questions about the code or docs? Please reach me !
 
