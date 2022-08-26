@@ -5,35 +5,32 @@ import useNormalizeString from "./composables/useNormalizeString";
 import { iUser } from "./interfaces";
 import Modal from "./components/Modal.vue";
 import { cloneDeep } from "lodash";
-import { USER_EMPTY, BASE_API_URL } from "./constants";
-import { useUpdateArrayByHash } from "./composables/useUpdateArrayByHash";
-import useFetchHelper from "./composables/useFetch"
+import { BASE_API_URL } from "./constants";
 import Spinner from "./components/Spinner.vue"
 
 
-const { data: users = new Array<iUser>, error: fetchError } = useFetchHelper(`${BASE_API_URL}/users`)
-let data: Ref<Array<iUser>> = ref(users);
+let users: Ref<Array<iUser>> = ref([]);
 const searchString: Ref<string> = ref("");
-const userToUpdate: Ref<iUser> = ref(USER_EMPTY);
+const userToUpdate = ref();
 let isModalOpen: Ref<boolean> = ref(false);
-let error = fetchError;
-let usersCache: any = {};
+let error: Ref<boolean> = ref(false);
+let usersCache = new Array<iUser>;
 const storage = window.sessionStorage;
 let cacheJson = storage.getItem('localUsersUpdates');
 
 if (cacheJson) {
   usersCache = JSON.parse(cacheJson);
+  users.value = usersCache;
+}
+else {
+  fetch(`${BASE_API_URL}/users`)
+    .then((res) => res.json())
+    .then((json) => (users.value = json))
+    .catch((err) => (error.value = err))
 }
 
-const mergedUsersFromCache = computed(() => {
-  if (usersCache && data.value) {
-    return useUpdateArrayByHash(data.value, usersCache)
-  }
-  return data.value;
-})
-
 const researchedData = computed(() => {
-  return mergedUsersFromCache.value.filter(searchLogic)
+  return users.value.filter(searchLogic)
 })
 
 function searchLogic(user: iUser): iUser | undefined {
@@ -61,27 +58,14 @@ function handleRowUpdate(user: iUser) {
 }
 
 function saveUpdatedInfo() {
+  const userCopy = cloneDeep(userToUpdate);
+  const positionOfUserToUpdate = users.value.findIndex(
+    (user: iUser) => userToUpdate.value.id === user.id
+  );
 
-  function updateUsersArray() {
-    const userCopy = cloneDeep(userToUpdate);
-    const positionOfUserToUpdate = data.value.findIndex(
-      (user: iUser) => userToUpdate.value.id === user.id
-    );
-
-    data.value[positionOfUserToUpdate] = cloneDeep(userCopy.value)
-  }
-
-  function updateCache() {
-    const userCopy = cloneDeep(userToUpdate);
-    usersCache[userCopy.value.id] = userCopy.value
-    storage.setItem('localUsersUpdates', JSON.stringify(usersCache))
-  }
-  if (data.value) {
-    updateUsersArray();
-    updateCache();
-    isModalOpen.value = false
-
-  }
+  users.value[positionOfUserToUpdate] = cloneDeep(userCopy.value)
+  storage.setItem('localUsersUpdates', JSON.stringify(users.value))
+  isModalOpen.value = false
 }
 </script>
 
@@ -106,7 +90,7 @@ function saveUpdatedInfo() {
     </template>
   </Modal>
   <span v-if="error">ERROR</span>
-  <div v-else-if="data">
+  <div v-else-if="users.length > 0">
     <input class="animated rotateIn" type="text" v-model="searchString" id="search-bar" placeholder="Search user..." />
     <Table :data="researchedData" @updateRow="handleRowUpdate" />
   </div>
