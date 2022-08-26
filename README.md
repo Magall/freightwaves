@@ -53,9 +53,9 @@ Just used for hierachy selectors. A possible evolution for the app would be decl
 
 ### How to Run?
 
-clone it.
-yarn
-yarn dev
+- clone it.
+- yarn
+- yarn dev
 
 ### Do you have any questions about the code or docs? Please reach me !
 
