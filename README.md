@@ -26,23 +26,23 @@ About the components the objective was similar to the functions, small, good nam
 For file naming, every vue instance starts with capital letter, every composing with 'use'.
 Enums names are uppercase and it's properties capital letter, constant names uppercase and if they are complex types the child props are all lower case.
 
-📦src
- ┣ 📂assets
- ┃ ┗ 📜logo.png
- ┣ 📂components
- ┃ ┣ 📜Modal.vue
- ┃ ┣ 📜Spinner.vue
- ┃ ┗ 📜Table.vue
- ┣ 📂composables
- ┃ ┣ 📜useFetch.ts
- ┃ ┣ 📜useNormalizeString.ts
- ┃ ┗ 📜useUpdateArrayByHash.ts
- ┣ 📜App.vue
- ┣ 📜constants.ts
- ┣ 📜enums.ts
- ┣ 📜env.d.ts
- ┣ 📜interfaces.ts
- ┗ 📜main.ts
+src
+ ┣ assets
+ ┃ ┗ logo.png
+ ┣ components
+ ┃ ┣ Modal.vue
+ ┃ ┣ Spinner.vue
+ ┃ ┗ Table.vue
+ ┣ composables
+ ┃ ┣ useFetch.ts
+ ┃ ┣ useNormalizeString.ts
+ ┃ ┗ useUpdateArrayByHash.ts
+ ┣ App.vue
+ ┣ constants.ts
+ ┣ enums.ts
+ ┣ env.d.ts
+ ┣ interfaces.ts
+ ┗ main.ts
 
 
 ### composables
